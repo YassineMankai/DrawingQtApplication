@@ -1,6 +1,6 @@
 # DrawingQtApplication
 
-# Instruction to test:
+# Instructions to test:
 
 install QtDesigner (Qt 6.2.1 version is needed)
 
@@ -8,7 +8,7 @@ open the .pro file and configure the project with the Desktop Qt 6.2.1 MinGW 64-
 
 run the project
 
-# User command: 
+# User commands: 
 
 ## There are 2 modes:
 
