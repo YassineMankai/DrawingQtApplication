@@ -20,6 +20,6 @@ You can select color/thickness/line type/shape and draw the object on the canva
 
 -> To change the form of an object, right click on it, then change the parameters
 
--> To delete a object, right click on it, and push the "delete selected shape" button
+-> To delete an object, right click on it, and push the "delete selected shape" button
 
 ## You can save a drawing in a text format and can load a previous drawing unsing the save and open commands (icons or file menu)
