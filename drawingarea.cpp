@@ -77,6 +77,10 @@ void DrawingAreaWidget::mousePressEvent(QMouseEvent *e)
             if (shapes[index]->contains(cursor)) {
                 currentShape = shapes[index];
                 change = true;    // a shape was selected
+                currentColor = currentShape->getColor();
+                currentThickness =  currentShape->getThickness();
+                currentStyle = currentShape->getStyle();
+                currentShapeType = currentShape->getType();
                 emit paramChanged(currentShape->getColor(), currentShape->getThickness(), currentShape->getStyle(), currentShape->getType());
                 break;
             }
@@ -220,6 +224,7 @@ void DrawingAreaWidget::changeState(QAbstractButton *modeButton)
     else if(styleName == "&editing") {
         currentState = editing;
     }
+    emit stateChanged(currentState == editing);
 }
 
 void DrawingAreaWidget::changeColor(QColor color)
@@ -325,7 +330,6 @@ void DrawingAreaWidget::proceedOpen(){
     QFile file(fileName);
 
     if (file.open(QIODevice::ReadOnly)) {
-
         delete currentShape;
         currentShape = nullptr;
 
@@ -364,6 +368,14 @@ void DrawingAreaWidget::proceedOpen(){
 }
 
 void DrawingAreaWidget::saveFile(){
+
+    if (currentShape != nullptr && isEditing)  // reverse a previous select event
+    {
+        shapes.append(currentShape);
+        currentShape = nullptr;
+        isEditing = false;
+    }
+
     QString path = QDir::current().path();
     path += "/files";
     QString fileName=QFileDialog::getSaveFileName(this,tr("save text file"),path,tr("Text Files(*.txt)"));
@@ -384,6 +396,15 @@ void DrawingAreaWidget::saveFile(){
 
     }
 
+}
+
+void DrawingAreaWidget::deleteShape()
+{
+    if (currentShape != nullptr && isEditing)  // reverse a previous select event
+    {
+        currentShape = nullptr;
+        update();
+    }
 }
 /*
 ###########################################################

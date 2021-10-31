@@ -61,9 +61,11 @@ public slots:
 
     void openFile();
     void saveFile();
+    void deleteShape();
 
 signals:
     void paramChanged(QColor const &color, int const thickness, Qt::PenStyle style, shape_type const type);
+    void stateChanged(bool editMode);
 };
 
 #endif // DRAWINGAREA_H

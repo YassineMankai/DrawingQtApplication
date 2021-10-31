@@ -121,6 +121,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // group shape selector, style selector, color indicator and thickness indicator in a group box
     QGroupBox *graphicalAttributesSetters = new QGroupBox(tr("Parameters"));
     rightLayout->addWidget(modeGroupWidget);
+    deleteShape = new QPushButton(tr("&delete Selected Shape"), graphicalAttributesSetters);
+    rightLayout->addWidget(deleteShape);
+    deleteShape->hide();
     rightLayout->addWidget(indicatorGroupWidget);
     rightLayout->addWidget(styleGroupWidget);
     rightLayout->addWidget(shapeGroupWidget);
@@ -142,9 +145,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(drawingArea, SIGNAL(paramChanged(QColor const &, int const, Qt::PenStyle, shape_type const)),
             this, SLOT(changeParam(QColor const &, int const, Qt::PenStyle, shape_type const)));
 
+    connect(drawingArea, SIGNAL(stateChanged(bool)), this, SLOT(handleStateChanged(bool)));
+
     connect(modeGroupButton, SIGNAL(buttonClicked(QAbstractButton*)),drawingArea, SLOT(changeState(QAbstractButton*)));
     connect(styleGroupButton, SIGNAL(buttonClicked(QAbstractButton*)),drawingArea, SLOT(chooseStyle(QAbstractButton*)));
     connect(shapeGroupButton, SIGNAL(buttonClicked(QAbstractButton*)),drawingArea, SLOT(chooseShape(QAbstractButton*)));
+    connect(deleteShape, SIGNAL(clicked()),drawingArea, SLOT(deleteShape()));
 
 
     connect(colorIndicator, SIGNAL(colorChanged(QColor)),drawingArea, SLOT(changeColor(QColor)));
@@ -212,6 +218,16 @@ void MainWindow::changeParam(QColor const &color, int const _thickness, Qt::PenS
         qDebug() << "error";
     }
 }
+
+void MainWindow::handleStateChanged(bool editMode)
+{
+    if (editMode){
+        deleteShape->show();
+    } else{
+        deleteShape->hide();
+    }
+}
+
 
 
 void MainWindow::closeEvent(QCloseEvent *event)

@@ -12,7 +12,7 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
-
+#include <QPushButton>
 
 #include "colorindicator.h"
 #include "drawingarea.h"
@@ -44,10 +44,12 @@ private:
     QRadioButton * lineS;
     QRadioButton * rectangeS;
     QRadioButton * ellipseS;
+    QPushButton * deleteShape;
 
 public slots:
     void quitApp();
     void changeParam(QColor const &color, int const _thickness, Qt::PenStyle _style, shape_type const _type);
+    void handleStateChanged(bool editMode);
 };
 
 #endif // MAINWINDOW_H
